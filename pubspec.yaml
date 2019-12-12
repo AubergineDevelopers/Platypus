@@ -1,0 +1,26 @@
+name: platypus
+description: Creating Code Screenshots Made Easy
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.3.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  flutter_highlight: # setting syntax highlighting & color-scheme of code
+  screenshot: # generating screenshots from widgets
+  provider: # state-management
+  path_provider: # reading/writing files in application document directory
+  share_extend: # sharing files
+  flutter_colorpicker: # picking colors
+  enum_to_string: # converting enums to strings
+  file_picker: # using local files from device
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
