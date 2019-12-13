@@ -155,4 +155,24 @@ class HomeProvider with ChangeNotifier {
     this._showShadow = _showShadow;
     notifyListeners();
   }
+
+  // line numbers
+  bool _showLineNumbers = false;
+
+  bool get showLineNumbers => this._showLineNumbers;
+
+  set showLineNumbers(bool _showLineNumbers) {
+    this._showLineNumbers = _showLineNumbers;
+    notifyListeners();
+  }
+
+  //
+  String _codeFontFamily = 'lato';
+
+  String get codeFontFamily => this._codeFontFamily;
+
+  set codeFontFamily(String _codeFontFamily) {
+    this._codeFontFamily = _codeFontFamily;
+    notifyListeners();
+  }
 }

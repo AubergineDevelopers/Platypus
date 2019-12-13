@@ -17,6 +17,7 @@ dependencies:
   flutter_colorpicker: # picking colors
   enum_to_string: # converting enums to strings
   file_picker: # using local files from device
+  google_fonts: # google fonts
 
 dev_dependencies:
   flutter_test:

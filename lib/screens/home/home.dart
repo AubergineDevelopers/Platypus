@@ -21,6 +21,7 @@ import 'package:platypus/screens/home/widgets/programming_languages_dropdown.dar
 import 'package:platypus/screens/home/widgets/highlight_themes_dropdown.dart';
 import 'package:platypus/screens/home/widgets/three_circles_styles_dropdown.dart';
 import 'package:platypus/screens/home/widgets/three_circles_position_dropdown.dart';
+import 'package:platypus/screens/home/widgets/toggle_line_numbers_raised_button.dart';
 import 'package:platypus/screens/home/widgets/toggle_shadow_raised_button.dart';
 import 'package:platypus/screens/home/widgets/background_color_picker.dart';
 import 'package:platypus/providers/home.dart';
@@ -33,21 +34,44 @@ class HomeScreen extends StatelessWidget {
       builder: (_, homeProvider, __) => Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () {
-              homeProvider.codeTextEditingController.text = '';
-              homeProvider.codeHighlightTheme = themeMap.keys.first;
-              homeProvider.codeProgrammingLanguage =
-                  programmingLanguages.keys.first;
-              homeProvider.codeBackgroundColor = Colors.white;
-              homeProvider.isPreview = false;
-              homeProvider.windowThreeCirclesStyle =
-                  WindowThreeCirclesStyle.Filled.toString();
-              homeProvider.windowThreeCirclesPosition = 'Left';
-              homeProvider.verticalPaddingBetweenCodeAndBackground = 20;
-              homeProvider.horizontalPaddingBetweenCodeAndBackground = 20;
-              homeProvider.codeFontSize = 16;
-              homeProvider.codeLineHeight = 0;
-              homeProvider.showShadow = false;
+            onPressed: () async {
+              await showDialog(
+                context: context,
+                builder: (builder) => AlertDialog(
+                  title: Text('Reset'),
+                  content: Text('Do you want to reset?'),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('No'),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        homeProvider.codeTextEditingController.text = '';
+                        homeProvider.codeHighlightTheme = themeMap.keys.first;
+                        homeProvider.codeProgrammingLanguage =
+                            programmingLanguages.keys.first;
+                        homeProvider.codeBackgroundColor = Colors.white;
+                        homeProvider.isPreview = false;
+                        homeProvider.windowThreeCirclesStyle =
+                            WindowThreeCirclesStyle.Filled.toString();
+                        homeProvider.windowThreeCirclesPosition = 'Left';
+                        homeProvider.verticalPaddingBetweenCodeAndBackground =
+                            20;
+                        homeProvider.horizontalPaddingBetweenCodeAndBackground =
+                            20;
+                        homeProvider.codeFontSize = 16;
+                        homeProvider.codeLineHeight = 0;
+                        homeProvider.showShadow = false;
+                        Navigator.pop(context);
+                      },
+                      child: Text('Yes'),
+                    ),
+                  ],
+                ),
+              );
             },
             icon: Icon(Icons.refresh),
             tooltip: 'Reset',
@@ -196,8 +220,11 @@ class HomeScreen extends StatelessWidget {
                                   ? Align(
                                       alignment: Alignment.centerLeft,
                                       child: HighlightView(
-                                        homeProvider
-                                            .codeTextEditingController.text,
+                                        homeProvider.showLineNumbers
+                                            ? addLineNumbersTo(homeProvider
+                                                .codeTextEditingController.text)
+                                            : homeProvider
+                                                .codeTextEditingController.text,
                                         language: homeProvider
                                             .codeProgrammingLanguage,
                                         theme: themeMap[
@@ -245,6 +272,10 @@ class HomeScreen extends StatelessWidget {
                         ThreeCirclesPositionDropdown(),
                         HighlightThemesDropdown(),
                         ProgrammingLanguagesDropdown(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        ToggleLineNumbersRaisedButton(),
                         SizedBox(
                           height: 20,
                         ),

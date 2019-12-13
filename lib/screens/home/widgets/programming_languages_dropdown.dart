@@ -15,6 +15,20 @@ class ProgrammingLanguagesDropdown extends StatelessWidget {
           value: homeProvider.codeProgrammingLanguage,
           onChanged: (newCodeProgrammingLanguage) {
             homeProvider.codeProgrammingLanguage = newCodeProgrammingLanguage;
+            if (!homeProvider.isPreview) {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content:
+                      Text('Switch to preview to view syntax highlighting'),
+                  action: SnackBarAction(
+                    onPressed: () {
+                      homeProvider.isPreview = true;
+                    },
+                    label: 'Switch',
+                  ),
+                ),
+              );
+            }
           },
           decoration: InputDecoration(labelText: 'Language'),
           items: <DropdownMenuItem>[
